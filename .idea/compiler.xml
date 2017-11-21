@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="BuildFinal" />
+        <module name="buildFinal" />
+        <module name="login" />
+        <module name="marcos.business.ex" />
+        <module name="marcosbusinessex" />
+        <module name="persistence" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="1.8">
+      <module name="buildFinal" target="1.8" />
+      <module name="BuildFinal" target="1.8" />
+      <module name="login" target="1.8" />
+      <module name="marcos.business.ex" target="1.5" />
+      <module name="marcosbusinessex" target="1.8" />
+      <module name="persistence" target="1.8" />
+      <module name="restServicesSample" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
