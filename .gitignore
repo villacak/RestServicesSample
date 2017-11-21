@@ -22,6 +22,7 @@ buildNumber.properties
 .idea/**/tasks.xml
 .idea/dictionaries
 
+# Removing more idea files
 restServicesSample.iml
 buildFinal/buildFinal.iml
 login/login.iml
