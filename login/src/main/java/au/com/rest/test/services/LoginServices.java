@@ -2,12 +2,10 @@ package au.com.rest.test.services;
 
 import au.com.rest.test.business.LoginCheck;
 import au.com.rest.test.pojos.UserApp;
+import au.com.rest.test.pojos.UserAppDetails;
 import au.com.rest.test.services.helper.ServicesHelper;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 
@@ -41,12 +39,18 @@ public class LoginServices {
 
 
     @PUT
-    public Response createNewUser(final String userDetails) {
-        final Response response = null;
-
-
+    public Response createNewUser(final UserAppDetails userDetails) {
+        final Response response;
+        if (userDetails == null) {
+            final ServicesHelper helper = new ServicesHelper();
+            response = helper.emptyPayload();
+        } else {
+            final LoginCheck loginCheck = new LoginCheck();
+            response = loginCheck.createUser(userDetails);
+        }
         return response;
     }
+
 
 
 }

@@ -35,7 +35,7 @@ public class UserSecurityEntity {
 
     @Basic
     @Column(name = "success_trys", nullable = true)
-    private Integer successTrys;
+    private Integer failedTrys;
 
 
 
@@ -88,12 +88,12 @@ public class UserSecurityEntity {
         this.lastAccess = lastAccess;
     }
 
-    public Integer getSuccessTrys() {
-        return successTrys;
+    public Integer getFailedTrys() {
+        return failedTrys;
     }
 
-    public void setSuccessTrys(Integer successTrys) {
-        this.successTrys = successTrys;
+    public void setFailedTrys(Integer successTrys) {
+        this.failedTrys = successTrys;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class UserSecurityEntity {
         if (accountState != null ? !accountState.equals(that.accountState) : that.accountState != null) return false;
         if (reason != null ? !reason.equals(that.reason) : that.reason != null) return false;
         if (lastAccess != null ? !lastAccess.equals(that.lastAccess) : that.lastAccess != null) return false;
-        if (successTrys != null ? !successTrys.equals(that.successTrys) : that.successTrys != null) return false;
+        if (failedTrys != null ? !failedTrys.equals(that.failedTrys) : that.failedTrys != null) return false;
 
         return true;
     }
@@ -120,7 +120,7 @@ public class UserSecurityEntity {
         result = 31 * result + (accountState != null ? accountState.hashCode() : 0);
         result = 31 * result + (reason != null ? reason.hashCode() : 0);
         result = 31 * result + (lastAccess != null ? lastAccess.hashCode() : 0);
-        result = 31 * result + (successTrys != null ? successTrys.hashCode() : 0);
+        result = 31 * result + (failedTrys != null ? failedTrys.hashCode() : 0);
         return result;
     }
 }

@@ -107,7 +107,7 @@ public class PersistenceDAO {
      * @param <T>
      * @return
      */
-    public <T extends Entity> T saveData(final T entity) {
+    public <T extends Object> T saveData(final T entity) {
         em.getTransaction().begin();
         final T returnEntity = em.merge(entity);
         em.getTransaction().commit();

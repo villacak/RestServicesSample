@@ -1,7 +1,9 @@
 package au.com.rest.test.business.mappers;
 
+import au.com.rest.test.entities.user.UserDetailsEntity;
 import au.com.rest.test.entities.user.UserEntity;
 import au.com.rest.test.pojos.UserApp;
+import au.com.rest.test.pojos.UserAppDetails;
 
 /**
  * Once both modules became projects this mapper packege is not needed anymore
@@ -11,20 +13,43 @@ import au.com.rest.test.pojos.UserApp;
  */
 public class UserMapper {
 
-    public UserEntity toUserEntity(final UserApp userApp) {
+    public UserEntity toUserEntity(final UserApp payload) {
         final UserEntity toReturn = new UserEntity();
-        toReturn.setId(userApp.getId());
-        toReturn.setLogin(userApp.getLogin());
-        toReturn.setPassword(userApp.getPassword());
+        toReturn.setId(payload.getId());
+        toReturn.setLogin(payload.getLogin());
+        toReturn.setPassword(payload.getPassword());
         return toReturn;
     }
 
 
-    public UserApp toUserEntity(final UserEntity userEntity) {
+    public UserApp toUser(final UserEntity entity) {
         final UserApp toReturn = new UserApp();
-        toReturn.setId(userEntity.getId());
-        toReturn.setLogin(userEntity.getLogin());
-        toReturn.setPassword(userEntity.getPassword());
+        toReturn.setId(entity.getId());
+        toReturn.setLogin(entity.getLogin());
+        toReturn.setPassword(entity.getPassword());
+        return toReturn;
+    }
+
+
+    public UserDetailsEntity toUserDetailsEntity(final UserAppDetails payload) {
+        final UserEntity innerToReturn = toUserEntity((UserApp) payload);
+        final UserDetailsEntity toReturn = new UserDetailsEntity();
+        toReturn.setEmail(payload.getEmail());
+        toReturn.setFullName(payload.getFullName());
+        toReturn.setPhone(payload.getPhone());
+        toReturn.setUserEntity(innerToReturn);
+        return toReturn;
+    }
+
+
+    public UserAppDetails toUserDetailsEntity(final UserDetailsEntity payload) {
+        final UserApp innerToReturn = toUser(payload.getUserEntity());
+        final UserAppDetails toReturn = new UserAppDetails();
+        toReturn.setEmail(payload.getEmail());
+        toReturn.setFullName(payload.getFullName());
+        toReturn.setPhone(payload.getPhone());
+        toReturn.setLogin(innerToReturn.getLogin());
+        toReturn.setPassword(innerToReturn.getPassword());
         return toReturn;
     }
 
