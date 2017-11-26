@@ -5,16 +5,17 @@ import au.com.rest.test.entities.user.UserEntity;
 import au.com.rest.test.entities.user.UserSecurityEntity;
 import au.com.rest.test.enums.KeyValueForSearch;
 
-import javax.persistence.*;
-import java.sql.PreparedStatement;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class PersistenceDAO {
 
     private final String PU = "NewPersistenceUnit";
 
-    private EntityManager em;
     private EntityManagerFactory emf;
+    private EntityManager em;
 
 
     /**
@@ -114,5 +115,19 @@ public class PersistenceDAO {
         em.flush();
         em.close();
         return returnEntity;
+    }
+
+
+    /**
+     * Close Entity manager and factory
+     */
+    public void closeEntityManager() {
+        if (em != null) {
+            em.close();
+        }
+
+        if (emf != null) {
+            emf.close();
+        }
     }
 }

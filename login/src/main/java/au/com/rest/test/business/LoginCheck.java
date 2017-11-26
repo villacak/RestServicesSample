@@ -4,21 +4,17 @@ import au.com.rest.test.business.enums.ReasonType;
 import au.com.rest.test.business.mappers.UserMapper;
 import au.com.rest.test.dao.PersistenceDAO;
 import au.com.rest.test.entities.user.UserDetailsEntity;
-import au.com.rest.test.entities.user.UserEntity;
 import au.com.rest.test.entities.user.UserSecurityEntity;
 import au.com.rest.test.enums.KeyValueForSearch;
 import au.com.rest.test.pojos.UserApp;
 import au.com.rest.test.pojos.UserAppDetails;
 import au.com.rest.test.services.helper.ServicesHelper;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
 
-@Path("/v1/login")
-@Consumes(MediaType.WILDCARD)
-@Produces(MediaType.APPLICATION_JSON)
 public class LoginCheck {
 
     private final int MAX_TRYS = 3;
@@ -29,13 +25,11 @@ public class LoginCheck {
      * @param userApp
      * @return
      */
-    @POST
-    @Path("check")
     public Response checkLogin(final UserApp userApp) {
         final Response response;
         if (userApp.getLogin() == null || userApp.getPassword() == null) {
             final ServicesHelper helper = new ServicesHelper();
-            response =  helper.badLoginPayload();
+            response = helper.badLoginPayload();
         } else {
             // Here the right thing to do is have a rest call to a rest inner service, in this case
             // the persistence service layer.
@@ -59,6 +53,7 @@ public class LoginCheck {
                     security.setLastAccess(ts);
                     daoUser.saveData(security);
                 }
+                daoUser.closeEntityManager();
                 response = Response.status(Response.Status.FORBIDDEN).build();
             }
         }
@@ -92,11 +87,11 @@ public class LoginCheck {
                 final UserMapper mapper = new UserMapper();
                 UserDetailsEntity entity = mapper.toUserDetailsEntity(userAppDetails);
 
-                final PersistenceDAO dao = new PersistenceDAO();
-                entity = dao.saveData(entity);
+                entity = daoUser.saveData(entity);
                 final String message = "User created with success.";
                 response = Response.ok(message).entity(entity).build();
             }
+            daoUser.closeEntityManager();
         }
         return response;
     }

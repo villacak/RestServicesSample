@@ -12,8 +12,8 @@ public class AppMain {
 
     private static final int DEFAULT_PORT = 8080;
 
-    private final String contextPathSeparator = "/resttest";
-    private final String addServlet = "/*";
+    private final String CONTEXT_PATH_SEPARATOR = "/resttest";
+    private final String ADD_SERVLET = "/*";
 
     private int serverPort;
 
@@ -32,22 +32,6 @@ public class AppMain {
      * @return
      */
     private Server configureServer() {
-//        Server server = new Server(8080);
-//
-//        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-//        context.setContextPath("/");
-//        server.setHandler(context);
-
-//        ServletHolder jerseyServlet = context.addServlet(org.glassfish.jersey.servlet.ServletContainer.class, "/webapi/*");
-//        jerseyServlet.setInitOrder(1);
-//        jerseyServlet.setInitParameter("jersey.config.server.provider.packages","com.example");
-//
-//        ServletHolder staticServlet = context.addServlet(DefaultServlet.class,"/*");
-//        staticServlet.setInitParameter("resourceBase","src/main/webapp");
-//        staticServlet.setInitParameter("pathInfoOnly","true");
-
-
-
         final Server server = new Server(serverPort);
         final ResourceConfig resourceConfig = new ResourceConfig();
         final ServletContainer servletContainer = new ServletContainer(resourceConfig);
@@ -58,8 +42,8 @@ public class AppMain {
         sh.setInitOrder(1);
 
         final ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-        context.setContextPath(contextPathSeparator);
-        context.addServlet(sh, addServlet);
+        context.setContextPath(CONTEXT_PATH_SEPARATOR);
+        context.addServlet(sh, ADD_SERVLET);
         server.setHandler(context);
         return server;
     }

@@ -1,9 +1,7 @@
 package au.com.rest.test.pojos;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class FailResponse {
@@ -11,8 +9,13 @@ public class FailResponse {
     private Response.Status status;
     private String message;
 
-    public Response.Status getStatus() {
-        return status;
+    public FailResponse(Response.Status status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public int getStatus() {
+        return status.getStatusCode();
     }
 
     public void setStatus(Response.Status status) {
@@ -28,9 +31,18 @@ public class FailResponse {
     }
 
 
-    public String getJSONAsString() throws JsonProcessingException {
-        final ObjectMapper mapper = new ObjectMapper();
-        final String jsonInString = mapper.writeValueAsString(this);
-        return jsonInString;
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("'status':").append(status.getStatusCode());
+        sb.append(", 'message':'").append(message).append("'");
+        sb.append('}');
+        return sb.toString();
+    }
+
+    public String toJson() {
+        final Gson gson = new Gson();
+        final String jsonStr = gson.toJson(this);
+        return jsonStr;
     }
 }

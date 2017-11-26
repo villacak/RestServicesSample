@@ -7,14 +7,10 @@
         <class>au.com.rest.test.entities.user.UserSecurityEntity</class>
 
         <properties>
-            <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/RestExample"/>
-            <property name="toplink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/RestExample"/>
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-            <property name="openjpa.ConnectionURL" value="jdbc:mysql://localhost:3306/RestExample"/>
-            <property name="openjpa.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
-            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/RestExample"/>
-            <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/RestExample" />
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="12345678"/>
         </properties>
     </persistence-unit>
 </persistence>
