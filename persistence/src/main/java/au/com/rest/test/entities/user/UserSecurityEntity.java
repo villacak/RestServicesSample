@@ -1,6 +1,7 @@
 package au.com.rest.test.entities.user;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
@@ -9,14 +10,14 @@ import java.sql.Timestamp;
         @NamedQuery(name = "userSecurity.findByLogin", query = "SELECT u FROM UserSecurityEntity u WHERE u.userEntity.login = :login"),
         @NamedQuery(name = "userSecurity.findByAccountState", query = "SELECT u FROM UserSecurityEntity u WHERE u.accountState = :accountState")
 })
-public class UserSecurityEntity {
+public class UserSecurityEntity implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
     private int id;
 
 //    @Basic
-    @Column(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     private UserEntity userEntity;
 //    private Integer userId;

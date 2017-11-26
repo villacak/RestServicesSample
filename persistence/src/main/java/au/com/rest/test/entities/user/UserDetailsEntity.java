@@ -1,6 +1,7 @@
 package au.com.rest.test.entities.user;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_details", schema = "RestExample")
@@ -9,14 +10,14 @@ import javax.persistence.*;
         @NamedQuery(name = "userDetails.findByEmail", query = "SELECT u FROM UserDetailsEntity u WHERE u.email = :email"),
         @NamedQuery(name = "userDetails.findByName", query = "SELECT u FROM UserDetailsEntity u WHERE u.fullName= :fullName")
 })
-public class UserDetailsEntity {
+public class UserDetailsEntity implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
     private int id;
 
 //    @Basic
-    @Column(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
     private UserEntity userEntity;
 //    private Integer userId;

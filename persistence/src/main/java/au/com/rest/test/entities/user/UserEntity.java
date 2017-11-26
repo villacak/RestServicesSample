@@ -1,13 +1,14 @@
 package au.com.rest.test.entities.user;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user", schema = "RestExample")
 @NamedQueries({
         @NamedQuery(name = "user.findByLogin", query = "SELECT u FROM UserEntity u WHERE u.login = :login")
 })
-public class UserEntity {
+public class UserEntity implements Serializable {
     private int id;
     private String login;
     private String password;
