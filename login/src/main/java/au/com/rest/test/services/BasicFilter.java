@@ -21,7 +21,7 @@ public class BasicFilter implements ContainerRequestFilter, ContainerResponseFil
 
     /**
      * After a request this is the first method the will be called, before than any service
-     *
+     * <p>
      * The best place to check tokens, cancel request, check URLs and header
      *
      * @param containerRequestContext
@@ -34,11 +34,15 @@ public class BasicFilter implements ContainerRequestFilter, ContainerResponseFil
         containerRequestContext.getHeaders().add("Request", "Adding a value in the request");
         containerRequestContext.getHeaders().add("URL called", urlPath);
         final String token = containerRequestContext.getHeaders().getFirst(TOKEN);
-        if (token != null) {
-            // validate the token, if fail validation set abort response
-        } else {
-            final Response response = Response.status(Response.Status.FORBIDDEN).build();
-            containerRequestContext.abortWith(response);
+
+        // If the request is not health check or login then it's necessary to check for the token
+        if (!urlPath.endsWith(HEALTH_CHECK) || !urlPath.endsWith(LOGIN)) {
+            if (token != null) {
+                // validate the token, if fail validation set abort response
+            } else {
+                final Response response = Response.status(Response.Status.FORBIDDEN).build();
+                containerRequestContext.abortWith(response);
+            }
         }
     }
 
@@ -53,13 +57,9 @@ public class BasicFilter implements ContainerRequestFilter, ContainerResponseFil
     @Override
     public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
         final MultivaluedMap<String, String> requestHeaderAsMap = containerRequestContext.getHeaders();
-        if (requestHeaderAsMap.getFirst(TOKEN) != null) {
-            for (String key : requestHeaderAsMap.keySet()) {
-                containerResponseContext.getHeaders().add(key, requestHeaderAsMap.get(key));
-            }
-            containerResponseContext.getHeaders().add("TestResponse", "Adding some value to the response");
-        } else {
-            containerResponseContext.setStatus(Response.Status.FORBIDDEN.getStatusCode());
+        for (String key : requestHeaderAsMap.keySet()) {
+            containerResponseContext.getHeaders().add(key, requestHeaderAsMap.get(key));
         }
+        containerResponseContext.getHeaders().add("TestResponse", "Adding some value to the response");
     }
 }
