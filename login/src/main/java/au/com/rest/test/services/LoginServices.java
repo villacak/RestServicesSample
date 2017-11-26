@@ -50,7 +50,4 @@ public class LoginServices {
         }
         return response;
     }
-
-
-
 }

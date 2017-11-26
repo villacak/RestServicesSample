@@ -11,9 +11,14 @@ import au.com.rest.test.pojos.UserApp;
 import au.com.rest.test.pojos.UserAppDetails;
 import au.com.rest.test.services.helper.ServicesHelper;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
 
+@Path("/v1/login")
+@Consumes(MediaType.WILDCARD)
+@Produces(MediaType.APPLICATION_JSON)
 public class LoginCheck {
 
     private final int MAX_TRYS = 3;
@@ -24,6 +29,8 @@ public class LoginCheck {
      * @param userApp
      * @return
      */
+    @POST
+    @Path("check")
     public Response checkLogin(final UserApp userApp) {
         final Response response;
         if (userApp.getLogin() == null || userApp.getPassword() == null) {
@@ -68,6 +75,8 @@ public class LoginCheck {
      * @param userAppDetails
      * @return
      */
+    @PUT
+    @Path("createUser")
     public Response createUser(final UserAppDetails userAppDetails) {
         final Response response;
         if (userAppDetails.getLogin() == null || userAppDetails.getPassword() == null) {
