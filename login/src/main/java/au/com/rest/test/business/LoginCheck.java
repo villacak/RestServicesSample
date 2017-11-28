@@ -36,10 +36,13 @@ public class LoginCheck {
             // But here we will just call the service.
             final PersistenceDAO daoUser = new PersistenceDAO();
             final UserSecurityEntity security = daoUser.getUserSecurity(userApp.getLogin(), KeyValueForSearch.LOGIN);
+            final Timestamp timestampNow = new Timestamp(System.currentTimeMillis());
             if (security.getId() > 0 &&
                     security.getUserEntity().getPassword() != null &&
-                    security.getReason() == ReasonType.ALLWOED.getCode()) {
+                    security.getReason() == ReasonType.ALLWOED.getCode() &&
+                    security.getUserEntity().getPassword().equals(userApp.getPassword())) {
                 userApp.setId(security.getId());
+                security.setLastAccess(timestampNow);
                 response = Response.ok(userApp).build();
             } else {
                 if (security != null) {
@@ -51,8 +54,9 @@ public class LoginCheck {
                         security.setReason(ReasonType.TOO_MANY_TRYS.getCode());
                     }
                     security.setLastAccess(ts);
-                    daoUser.saveData(security);
                 }
+                security.setLastAccess(timestampNow);
+                daoUser.saveData(security);
                 daoUser.closeEntityManager();
                 response = Response.status(Response.Status.FORBIDDEN).build();
             }

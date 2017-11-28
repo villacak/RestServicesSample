@@ -57,9 +57,9 @@ public class BasicFilter implements ContainerRequestFilter, ContainerResponseFil
     @Override
     public void filter(ContainerRequestContext containerRequestContext, ContainerResponseContext containerResponseContext) throws IOException {
         final MultivaluedMap<String, String> requestHeaderAsMap = containerRequestContext.getHeaders();
-        for (String key : requestHeaderAsMap.keySet()) {
-            containerResponseContext.getHeaders().add(key, requestHeaderAsMap.get(key));
-        }
-        containerResponseContext.getHeaders().add("TestResponse", "Adding some value to the response");
+//        for (String key : requestHeaderAsMap.keySet()) {
+//            containerResponseContext.getHeaders().add(key, requestHeaderAsMap.get(key));
+//        }
+//        containerResponseContext.getHeaders().add("TestResponse", "Adding some value to the response");
     }
 }

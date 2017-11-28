@@ -37,7 +37,7 @@ public class PersistenceDAO {
         final Query query = em.createNamedQuery("user.findByLogin");
         query.setParameter("login", login);
         final UserEntity toReturn = (UserEntity) query.getSingleResult();
-        return  toReturn;
+        return toReturn;
     }
 
 
@@ -82,9 +82,9 @@ public class PersistenceDAO {
     public UserSecurityEntity getUserSecurity(final String keyValue, final KeyValueForSearch keyType) {
         final String namedQuery;
         if (keyType.equals(KeyValueForSearch.LOGIN)) {
-            namedQuery = "userDetails.findByEmail";
+            namedQuery = "userSecurity.findByLogin";
         } else if (keyType.equals(KeyValueForSearch.ACCOUNT_STATE)) {
-            namedQuery = "userDetails.findByName";
+            namedQuery = "userSecurity.findByAccountState";
         } else {
             namedQuery = null;
         }

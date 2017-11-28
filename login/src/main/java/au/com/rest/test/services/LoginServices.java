@@ -12,8 +12,6 @@ import javax.ws.rs.core.Response;
 
 
 @Path("/v1/login")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
 public class LoginServices {
 
 
@@ -29,6 +27,8 @@ public class LoginServices {
      */
     @POST
     @Path("check")
+    @Consumes("application/json")
+    @Produces("application/json")
     public Response login(final UserApp userApp) {
         Response response = null;
         if (userApp == null) {
@@ -40,7 +40,7 @@ public class LoginServices {
                 response = loginCheck.checkLogin(userApp);
             } catch (Exception e) {
                 final FailResponse fail = new FailResponse(Response.Status.INTERNAL_SERVER_ERROR, e.getMessage());
-                response = Response.serverError().entity(fail.toString()).type(MediaType.APPLICATION_JSON_TYPE).build();
+                response = Response.serverError().entity(fail).type(MediaType.APPLICATION_JSON_TYPE).build();
             }
         }
         return response;
@@ -48,6 +48,9 @@ public class LoginServices {
 
 
     @PUT
+    @Path("create")
+    @Consumes("application/json")
+    @Produces("application/json")
     public Response createNewUser(final UserAppDetails userDetails) {
         final Response response;
         if (userDetails == null) {
