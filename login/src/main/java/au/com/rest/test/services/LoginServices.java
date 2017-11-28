@@ -22,6 +22,11 @@ public class LoginServices {
      * Then it will return a token within the header as well
      * if success validated
      *
+     * URL example: http://localhost:8080/resttest/v1/login/check
+     *
+     * raw payload
+     * {"login": "userLogin", "password": "myTestPassword"}
+     *
      * @param userApp
      * @return
      */
@@ -45,6 +50,7 @@ public class LoginServices {
         }
         return response;
     }
+
 
 
     @PUT
