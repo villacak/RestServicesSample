@@ -7,6 +7,7 @@
         <class>au.com.rest.test.entities.user.UserSecurityEntity</class>
 
         <properties>
+            <property name="eclipselink.weaving" value="static"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/RestExample" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
             <property name="javax.persistence.jdbc.user" value="root"/>

@@ -4,20 +4,21 @@ import au.com.rest.test.business.enums.ReasonType;
 import au.com.rest.test.business.mappers.UserMapper;
 import au.com.rest.test.dao.PersistenceDAO;
 import au.com.rest.test.entities.user.UserDetailsEntity;
+import au.com.rest.test.entities.user.UserEntity;
 import au.com.rest.test.entities.user.UserSecurityEntity;
 import au.com.rest.test.enums.KeyValueForSearch;
 import au.com.rest.test.pojos.UserApp;
 import au.com.rest.test.pojos.UserAppDetails;
 import au.com.rest.test.services.helper.ServicesHelper;
 
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 public class LoginCheck {
 
     private final int MAX_TRYS = 3;
+    private final String TOKEN = "token";
 
     /**
      * Check if the credentials exist or not
@@ -43,7 +44,7 @@ public class LoginCheck {
                     security.getUserEntity().getPassword().equals(userApp.getPassword())) {
                 userApp.setId(security.getId());
                 security.setLastAccess(timestampNow);
-                response = Response.ok(userApp).build();
+                response = Response.ok(userApp).header(TOKEN, Instant.now().toString()).build();
             } else {
                 if (security != null) {
                     final Timestamp ts = new Timestamp(System.currentTimeMillis());
@@ -74,8 +75,6 @@ public class LoginCheck {
      * @param userAppDetails
      * @return
      */
-    @PUT
-    @Path("createUser")
     public Response createUser(final UserAppDetails userAppDetails) {
         final Response response;
         if (userAppDetails.getLogin() == null || userAppDetails.getPassword() == null) {
@@ -89,11 +88,24 @@ public class LoginCheck {
                 response =  helper.existingUserLoginPayload();
             } else {
                 final UserMapper mapper = new UserMapper();
-                UserDetailsEntity entity = mapper.toUserDetailsEntity(userAppDetails);
+                UserDetailsEntity entityDetails = mapper.toUserDetailsEntity(userAppDetails);
+                UserEntity entity = entityDetails.getUserEntity();
+                entityDetails = daoUser.saveData(entityDetails);
 
-                entity = daoUser.saveData(entity);
+                if (entityDetails.getUserEntity() != null &&
+                        entityDetails.getUserEntity().getPassword().equals(entity.getPassword())) {
+                    final UserSecurityEntity security = new UserSecurityEntity();
+                    security.setLastAccess(Timestamp.from(Instant.now()));
+                    security.setFailedTrys(0);
+                    security.setReason(ReasonType.ALLWOED.getCode());
+                    security.setUserEntity(entityDetails.getUserEntity());
+                    security.setAccountState(ReasonType.ALLWOED.name());
+                    daoUser.saveData(security);
+                }
                 final String message = "User created with success.";
-                response = Response.ok(message).entity(entity).build();
+                response = Response.ok(message).header(TOKEN, Instant.now().toString()).entity(entityDetails).build();
+                entityDetails = null;
+                entity = null;
             }
             daoUser.closeEntityManager();
         }

@@ -13,14 +13,13 @@ import java.io.Serializable;
 public class UserDetailsEntity implements Serializable {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
-//    @Basic
     @JoinColumn(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserEntity.class)
+    @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity userEntity;
-//    private Integer userId;
 
     @Basic
     @Column(name = "fullName", nullable = true, length = 100)
@@ -42,15 +41,6 @@ public class UserDetailsEntity implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
-//    public Integer getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Integer userId) {
-//        this.userId = userId;
-//    }
-
 
     public UserEntity getUserEntity() {
         return userEntity;

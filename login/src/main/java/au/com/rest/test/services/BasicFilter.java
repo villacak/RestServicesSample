@@ -17,6 +17,7 @@ public class BasicFilter implements ContainerRequestFilter, ContainerResponseFil
 
     private final String HEALTH_CHECK = "/health/check";
     private final String LOGIN = "/login/check";
+    private final String CREATE_USER = "/login/create";
     private final String TOKEN = "token";
 
     /**
@@ -36,7 +37,9 @@ public class BasicFilter implements ContainerRequestFilter, ContainerResponseFil
         final String token = containerRequestContext.getHeaders().getFirst(TOKEN);
 
         // If the request is not health check or login then it's necessary to check for the token
-        if (!urlPath.endsWith(HEALTH_CHECK) && !urlPath.endsWith(LOGIN)) {
+        if (!urlPath.endsWith(HEALTH_CHECK) && !
+                urlPath.endsWith(LOGIN) &&
+                !urlPath.endsWith(CREATE_USER)) {
             if (token != null) {
                 // validate the token, if fail validation set abort response
             } else {

@@ -5,10 +5,7 @@ import au.com.rest.test.entities.user.UserEntity;
 import au.com.rest.test.entities.user.UserSecurityEntity;
 import au.com.rest.test.enums.KeyValueForSearch;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.*;
 
 public class PersistenceDAO {
 
@@ -60,13 +57,17 @@ public class PersistenceDAO {
             namedQuery = null;
         }
 
-        final UserDetailsEntity toReturn;
+        UserDetailsEntity toReturn;
         if (namedQuery == null) {
             toReturn = null;
         } else {
             final Query query = em.createNamedQuery(namedQuery);
             query.setParameter(keyType.getType(), keyValue);
-            toReturn = (UserDetailsEntity) query.getSingleResult();
+            try {
+                toReturn = (UserDetailsEntity) query.getSingleResult();
+            } catch (NoResultException nre) {
+                toReturn = null;
+            }
         }
         return toReturn;
     }
@@ -112,8 +113,8 @@ public class PersistenceDAO {
         em.getTransaction().begin();
         final T returnEntity = em.merge(entity);
         em.getTransaction().commit();
-        em.flush();
-        em.close();
+//        em.flush();
+//        em.close();
         return returnEntity;
     }
 

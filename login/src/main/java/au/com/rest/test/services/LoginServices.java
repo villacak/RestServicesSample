@@ -52,7 +52,15 @@ public class LoginServices {
     }
 
 
-
+    /**
+     * Create a new user if it doesn't exist
+     *
+     * raw payload
+     *
+     *
+     * @param userDetails
+     * @return
+     */
     @PUT
     @Path("create")
     @Consumes("application/json")
