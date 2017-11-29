@@ -24,7 +24,7 @@ public class LoginServices {
      *
      * URL example: http://localhost:8080/resttest/v1/login/check
      *
-     * raw payload
+     * raw payload example
      * {"login": "userLogin", "password": "myTestPassword"}
      *
      * @param userApp
@@ -55,8 +55,16 @@ public class LoginServices {
     /**
      * Create a new user if it doesn't exist
      *
-     * raw payload
      *
+     * URL example: http://localhost:8080/resttest/v1/login/create
+     * raw payload example
+     * {
+     *   "login": "mylogin",
+     *   "password": "mypassword",
+     *   "fullName": "firstName lastName",
+     *   "email": "firstName.lastName@somewhere.com.au",
+     *   "phone": "1234 567 890"
+     * }
      *
      * @param userDetails
      * @return

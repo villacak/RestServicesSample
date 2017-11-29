@@ -69,7 +69,7 @@ public class LoginCheck {
 
     /**
      * Create a new user if doesn't exist
-     *
+     * <p>
      * Everywhere you see PersistenceDAO will be replaced by a rest client call
      *
      * @param userAppDetails
@@ -79,31 +79,36 @@ public class LoginCheck {
         final Response response;
         if (userAppDetails.getLogin() == null || userAppDetails.getPassword() == null) {
             final ServicesHelper helper = new ServicesHelper();
-            response =  helper.badLoginPayload();
+            response = helper.badLoginPayload();
         } else {
             final PersistenceDAO daoUser = new PersistenceDAO();
             final UserDetailsEntity tempUserEntity = daoUser.getUserDetails(userAppDetails.getLogin(), KeyValueForSearch.LOGIN);
             if (tempUserEntity != null) {
                 final ServicesHelper helper = new ServicesHelper();
-                response =  helper.existingUserLoginPayload();
+                response = helper.existingUserLoginPayload();
             } else {
                 final UserMapper mapper = new UserMapper();
+                UserEntity entity = daoUser.getUser(userAppDetails.getLogin());
                 UserDetailsEntity entityDetails = mapper.toUserDetailsEntity(userAppDetails);
-                UserEntity entity = entityDetails.getUserEntity();
-                entityDetails = daoUser.saveData(entityDetails);
+                if (entity != null) {
+                    response = Response.status(Response.Status.CONFLICT).entity("User already exist.").build();
+                } else {
+                    entity = entityDetails.getUserEntity();
+                    entityDetails = daoUser.saveData(entityDetails);
 
-                if (entityDetails.getUserEntity() != null &&
-                        entityDetails.getUserEntity().getPassword().equals(entity.getPassword())) {
-                    final UserSecurityEntity security = new UserSecurityEntity();
-                    security.setLastAccess(Timestamp.from(Instant.now()));
-                    security.setFailedTrys(0);
-                    security.setReason(ReasonType.ALLWOED.getCode());
-                    security.setUserEntity(entityDetails.getUserEntity());
-                    security.setAccountState(ReasonType.ALLWOED.name());
-                    daoUser.saveData(security);
+                    if (entityDetails.getUserEntity() != null &&
+                            entityDetails.getUserEntity().getPassword().equals(entity.getPassword())) {
+                        final UserSecurityEntity security = new UserSecurityEntity();
+                        security.setLastAccess(Timestamp.from(Instant.now()));
+                        security.setFailedTrys(0);
+                        security.setReason(ReasonType.ALLWOED.getCode());
+                        security.setUserEntity(entityDetails.getUserEntity());
+                        security.setAccountState(ReasonType.ALLWOED.name());
+                        daoUser.saveData(security);
+                    }
+                    final String message = "User created with success.";
+                    response = Response.ok(message).header(TOKEN, Instant.now().toString()).entity(entityDetails).build();
                 }
-                final String message = "User created with success.";
-                response = Response.ok(message).header(TOKEN, Instant.now().toString()).entity(entityDetails).build();
                 entityDetails = null;
                 entity = null;
             }

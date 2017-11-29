@@ -33,7 +33,12 @@ public class PersistenceDAO {
     public UserEntity getUser(final String login) {
         final Query query = em.createNamedQuery("user.findByLogin");
         query.setParameter("login", login);
-        final UserEntity toReturn = (UserEntity) query.getSingleResult();
+        UserEntity toReturn;
+        try {
+            toReturn = (UserEntity) query.getSingleResult();
+        } catch (NoResultException nre) {
+            toReturn = null;
+        }
         return toReturn;
     }
 
