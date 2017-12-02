@@ -27,6 +27,7 @@ restServicesSample.iml
 buildFinal/buildFinal.iml
 login/login.iml
 persistence/persistence.iml
+view/view.iml
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/

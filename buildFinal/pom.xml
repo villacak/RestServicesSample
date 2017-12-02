@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>marcos.rest.ex</artifactId>
+        <artifactId>restServicesSample</artifactId>
         <groupId>au.com.test</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -19,6 +19,12 @@
 
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>au.com.test</groupId>-->
+            <!--<artifactId>view</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>au.com.test</groupId>
             <artifactId>login</artifactId>
@@ -32,8 +38,28 @@
         </dependency>
     </dependencies>
 
+
     <build>
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+            <!--</resource>-->
+        <!--</resources>-->
         <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-war-plugin</artifactId>-->
+                <!--<version>2.3</version>-->
+                <!--<configuration>-->
+                    <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+                    <!--<webResources>-->
+                        <!--<resource>-->
+                            <!--&lt;!&ndash; this is relative to the pom.xml directory &ndash;&gt;-->
+                            <!--<directory>../view/dist/</directory>-->
+                        <!--</resource>-->
+                    <!--</webResources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -58,7 +84,6 @@
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>au.com.rest.test.AppMain</mainClass>
-                                    <!--<Build-Number>1.0</Build-Number>-->
                                 </transformer>
                             </transformers>
                         </configuration>

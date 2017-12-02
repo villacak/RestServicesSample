@@ -5,13 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>au.com.test</groupId>
-    <artifactId>marcos.rest.ex</artifactId>
+    <artifactId>restServicesSample</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
         <module>persistence</module>
         <module>login</module>
         <module>buildFinal</module>
+        <module>view</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -109,7 +110,7 @@
                     <!--</execution>-->
                 <!--</executions>-->
                 <!--<configuration>-->
-                    <!--<mainClass>au.com.rest.test.AppMain</mainClass>-->
+                    <!--<mainClass>AppMain</mainClass>-->
                 <!--</configuration>-->
             <!--</plugin>-->
         <!--</plugins>-->
