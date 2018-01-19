@@ -1,6 +1,6 @@
-import {AppPage} from './app.po';
+import { AppPage } from './app.po';
 
-describe('view App', () => {
+describe('view-test-app App', () => {
   let page: AppPage;
 
   beforeEach(() => {
