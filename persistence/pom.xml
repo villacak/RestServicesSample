@@ -74,24 +74,18 @@
 
         <!-- Jetty replacing Tomcat or other AS'es -->
         <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>9.4.7.v20170914</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty</groupId>-->
+<!--            <artifactId>jetty-server</artifactId>-->
+<!--            <version>9.4.17.v20190418</version>-->
+<!--        </dependency>-->
 
-        <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>9.4.7.v20170914</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-servlet</artifactId>
-            <version>9.4.7.v20170914</version>
-        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlet &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty</groupId>-->
+<!--            <artifactId>jetty-servlet</artifactId>-->
+<!--            <version>9.4.17.v20190418</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
